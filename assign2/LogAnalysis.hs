@@ -46,13 +46,10 @@ time l =
 
 insert :: LogMessage -> MessageTree -> MessageTree
 insert (Unknown _) mt = mt
-insert l mt =
-  case mt of
-    Leaf -> Node Leaf l Leaf
-    Node left h right ->
-      if h `isNewer` l
-        then insert l left
-        else insert l right
+insert l Leaf = Node Leaf l Leaf
+insert l (Node left h right)
+  | l `isNewer` h = Node (insert l left) h right
+  | h `isNewer` l = Node left h (insert l right)
 
 build :: [LogMessage] -> MessageTree
 build l = foldr insert Leaf l
@@ -62,4 +59,28 @@ inOrder Leaf = []
 inOrder tree =
   case tree of
     Leaf -> []
-    Node left log right -> inOrder left ++ [log] ++ inOrder right
+    Node left l right -> inOrder left ++ [l] ++ inOrder right
+
+-- begin actual parsing of stuff
+priority :: LogMessage -> Maybe Int
+priority l =
+  case l of
+    Unknown _ -> Nothing
+    LogMessage ty _ _ ->
+      case ty of
+        Error n -> Just n
+        _ -> Nothing
+
+infix `priorityGreaterThan`
+priorityGreaterThan :: Int -> LogMessage -> Bool
+priorityGreaterThan n t =
+  case priority t of
+    Just e_num -> n <= e_num
+    Nothing -> False
+
+whatWentWrong :: Int -> [LogMessage] -> [String]
+whatWentWrong _ [] = [""]
+whatWentWrong n messages = 
+  map show $ filter (priorityGreaterThan n) list
+  where list = (inOrder . build) messages
+
