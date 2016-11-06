@@ -53,3 +53,13 @@ insert l mt =
       if h `isNewer` l
         then insert l left
         else insert l right
+
+build :: [LogMessage] -> MessageTree
+build l = foldr insert Leaf l
+
+inOrder :: MessageTree -> [LogMessage]
+inOrder Leaf = []
+inOrder tree =
+  case tree of
+    Leaf -> []
+    Node left log right -> inOrder left ++ [log] ++ inOrder right
