@@ -23,11 +23,6 @@ parseTimeStamp :: [String]
 parseTimeStamp [] = (0 :: TimeStamp, [])
 parseTimeStamp ss = (read $ head ss, drop 1 ss)
 
-wrapit :: [String] -> String
-wrapit [] = ""
-wrapit [x] = x
-wrapit (x:xs) = x ++ " " ++ (wrapit xs)
-
 parseMessage :: String -> LogMessage
 parseMessage [] = Unknown ""
 parseMessage message = 
@@ -35,4 +30,8 @@ parseMessage message =
   let (timestamp, msg) = parseTimeStamp _msg in
   case typeof of
     Nothing -> Unknown message
-    Just typeof -> LogMessage typeof timestamp (wrapit msg)
+    Just t -> LogMessage t timestamp (unwords msg)
+
+parse :: String -> [LogMessage]
+parse "" = []
+parse s = map parseMessage (lines s)
