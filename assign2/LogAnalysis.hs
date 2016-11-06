@@ -3,10 +3,7 @@
 module LogAnalysis where
 import Log
 
-
--- TODO: Implement
--- parseMessage :: String -> LogMessage
-
+-- Begin parse
 parseMessageType :: String
     -> (Maybe MessageType, [String])
 parseMessageType [] = (Nothing, [""])
@@ -35,3 +32,24 @@ parseMessage message =
 parse :: String -> [LogMessage]
 parse "" = []
 parse s = map parseMessage (lines s)
+
+-- begin tree stuffs
+infix `isNewer`
+isNewer :: LogMessage -> LogMessage -> Bool
+isNewer la lb = time la > time lb
+
+time :: LogMessage -> Maybe TimeStamp
+time l =
+  case l of
+    Unknown _ -> Nothing
+    LogMessage _ times _ -> Just times 
+
+insert :: LogMessage -> MessageTree -> MessageTree
+insert (Unknown _) mt = mt
+insert l mt =
+  case mt of
+    Leaf -> Node Leaf l Leaf
+    Node left h right ->
+      if h `isNewer` l
+        then insert l left
+        else insert l right
