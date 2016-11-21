@@ -36,8 +36,5 @@ frequencies l = map (\x -> count x l) zeroToNine
 -- make the stars
 stars ls n = map (\x -> if x >= n then '*' else ' ') ls
 
-decrement = map (\x -> if x > 0 then x - 1 else 0)
--- onlyValid = filter $ flip elem zeroToNine
-
 count :: Eq a => a -> [a] -> Integer
 count x = genericLength . filter (x==)
