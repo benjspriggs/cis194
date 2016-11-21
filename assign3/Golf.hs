@@ -24,15 +24,13 @@ pairwise :: [a] -> [(a,a)]
 pairwise as = zip as (tail as)
 
 -- Exercise 3 - Histogram
-zeroToNine = [0 .. 9]
-
 histogram :: [Integer] -> String
 histogram l =
   unlines (map (stars ls) [max,max-1..1]) ++ "==========\n0123456789\n"
   where ls = frequencies l
         max = maximum ls
 
-frequencies l = map (\x -> count x l) zeroToNine
+frequencies l = map (\x -> count x l) [0..9]
 -- make the stars
 stars ls n = map (\x -> if x >= n then '*' else ' ') ls
 
