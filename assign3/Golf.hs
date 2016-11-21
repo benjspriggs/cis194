@@ -28,12 +28,13 @@ zeroToNine = [0 .. 9]
 
 histogram :: [Integer] -> String
 histogram l =
-  -- occurances l ++ "\n"
-  map (\_ -> '=') [0..9] ++ "\n"
-  ++ ['0'..'9'] ++ "\n"
-  where frequency l = map (\x -> count x l) zeroToNine
-        toString = map (\x -> if x > 0 then '*' else ' ')
-        done list = [0] == nub list
+  unlines (map (stars ls) [max,max-1..1]) ++ "==========\n0123456789\n"
+  where ls = frequencies l
+        max = maximum ls
+
+frequencies l = map (\x -> count x l) zeroToNine
+-- make the stars
+stars ls n = map (\x -> if x >= n then '*' else ' ') ls
 
 decrement = map (\x -> if x > 0 then x - 1 else 0)
 -- onlyValid = filter $ flip elem zeroToNine
