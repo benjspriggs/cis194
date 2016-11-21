@@ -41,8 +41,3 @@ decrement = map (\x -> if x > 0 then x - 1 else 0)
 
 count :: Eq a => a -> [a] -> Integer
 count x = genericLength . filter (x==)
-
--- take all of the valid numbers
--- map them over zeroToNine
--- count the number of times it shows in zeroToNine
-countInZeroToNine l = map (\x -> length x) $ group $ sort $ filter (\x -> elem x zeroToNine) l
