@@ -3,6 +3,7 @@
 
 module Golf where
 
+import Data.List
 -- Exercise 1 - Hopscotch
 skips :: [a] -> [[a]]
 skips [] = [[]]
@@ -16,3 +17,8 @@ every n a =
     [] -> []
 
 -- Exercise 2 - Local maxima
+localMaxima :: [Integer] -> [Integer]
+localMaxima = map fst . filter (\(x,y) -> x > y) . pairwise
+
+pairwise :: [a] -> [(a,a)]
+pairwise as = zip as (tail as)
