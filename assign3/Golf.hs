@@ -27,7 +27,7 @@ pairwise as = zip as (tail as)
 histogram :: [Integer] -> String
 histogram l =
   unlines (map (stars ls) [max,max-1..1]) ++ "==========\n0123456789\n"
-  where ls = frequencies l
+  where ls  = frequencies l
         max = maximum ls
 
 frequencies l = map (\x -> count x l) [0..9]
