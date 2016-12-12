@@ -47,3 +47,14 @@ insertIntoTree a (Node h l as r) =
         height t = case t of
                     Leaf -> 0
                     Node h l _ r -> 1 + max (height l) (height r)
+
+-- Exercise 3: More folds!
+
+-- xor :: [Bool] -> Bool
+-- Return if there an odd number of true values
+xor :: [Bool] -> Bool
+xor = odd . length . filter id
+
+-- map' :: (a -> b) -> [a] -> [b]
+-- Implement map as a foldr
+
