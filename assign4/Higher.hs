@@ -57,4 +57,5 @@ xor = odd . length . filter id
 
 -- map' :: (a -> b) -> [a] -> [b]
 -- Implement map as a foldr
-
+map' :: (a -> b) -> [a] -> [b]
+map' f = foldr (\x l -> (f x):l) []
