@@ -30,6 +30,8 @@ data Tree a = Leaf
 foldTree :: [a] -> Tree a
 foldTree = foldr insertIntoTree Leaf
 
+-- wrong numbers but the other way is
+-- dumb
 insertIntoTree :: a -> Tree a -> Tree a
 insertIntoTree a Leaf = Node 0 Leaf a Leaf
 insertIntoTree a (Node h l as r) = 
