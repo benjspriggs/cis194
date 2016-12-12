@@ -32,8 +32,16 @@ foldTree = foldr insertIntoTree Leaf
 
 insertIntoTree :: a -> Tree a -> Tree a
 insertIntoTree a Leaf = Node 0 Leaf a Leaf
-insertIntoTree a (Node h l as r) = Node h left as right
+insertIntoTree a (Node h l as r) = 
+  Node h left as right
   where (left, right) = case (l, r) of 
-            (Leaf, r) -> (Node (h + 1) Leaf a Leaf, r)
-            (l, Leaf) -> (l, Node (h + 1) Leaf a Leaf)
-            (_ , _) -> (insertIntoTree a l, r)
+          (Leaf, Leaf) -> (newnode, Leaf)
+          (Leaf, r) -> (newnode, r)
+          (l, Leaf) -> (l, newnode)
+          (_ , _) -> if height r > height l 
+            then (insertIntoTree a l, r) 
+            else (l, insertIntoTree a r)
+        newnode = Node (h+1) Leaf a Leaf
+        height t = case t of
+                    Leaf -> 0
+                    Node h l _ r -> 1 + max (height l) (height r)
