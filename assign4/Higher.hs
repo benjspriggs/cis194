@@ -21,3 +21,19 @@ fun2 1 = 0
 fun2 n = evens n + odds n
   where evens = (*2)
         odds = (*3)
+
+data Tree a = Leaf
+  | Node Integer (Tree a) a (Tree a) deriving (Show)
+-- foldTree :: [a] -> Tree a
+-- generates a balanced tree from a list
+-- using foldr
+foldTree :: [a] -> Tree a
+foldTree = foldr insertIntoTree Leaf
+
+insertIntoTree :: a -> Tree a -> Tree a
+insertIntoTree a Leaf = Node 0 Leaf a Leaf
+insertIntoTree a (Node h l as r) = Node h left as right
+  where (left, right) = case (l, r) of 
+            (Leaf, r) -> (Node (h + 1) Leaf a Leaf, r)
+            (l, Leaf) -> (l, Node (h + 1) Leaf a Leaf)
+            (_ , _) -> (insertIntoTree a l, r)
