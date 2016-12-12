@@ -59,3 +59,13 @@ xor = odd . length . filter id
 -- Implement map as a foldr
 map' :: (a -> b) -> [a] -> [b]
 map' f = foldr (\x l -> (f x):l) []
+
+-- Exercise 4: Finding primes
+
+-- sieveSundaram :: Integer -> [Integer]
+-- Generate all prime numbers up to 2n + 2
+-- Using the sieve of Sundaram,
+-- implemented with function composition
+sieveSundaram :: Integer -> [Integer]
+sieveSundaram n = map (\x -> (2*x) + 1) $ filter (\x -> not $ elem x elim) [1..n]
+  where elim = [i + j + (2 * i * j) | i <- [1..n], j <- [i..n], i + j + (2 * i * j) <= n]
