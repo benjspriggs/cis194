@@ -27,7 +27,7 @@ evalString s = case parseExp ExprT.Lit ExprT.Add ExprT.Mul s of
 -- Create a type class such that:
 -- mul (add (lit 2) (lit 3)) (lit 4) :: ExprT
 -- == ExprT.Mul (ExprT.Add (ExprT.Lit 2) (ExprT.Lit 3)) (ExprT.Lit 4)
-class (Show a) => Expr a where
+class Expr a where
   lit :: Integer -> a
   add, mul :: a -> a -> a
 
