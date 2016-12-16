@@ -67,5 +67,10 @@ map' f = foldr (\x l -> (f x):l) []
 -- Using the sieve of Sundaram,
 -- implemented with function composition
 sieveSundaram :: Integer -> [Integer]
-sieveSundaram n = map (\x -> (2*x) + 1) $ filter (\x -> not $ elem x elim) [1..n]
-  where elim = [i + j + (2 * i * j) | i <- [1..n], j <- [i..n], i + j + (2 * i * j) <= n]
+sieveSundaram n = 
+  takeWhile (<n) $ 
+  map (\x -> (2*x) + 1) $
+  filter (\x -> not $
+  elem x primes) $ 
+  enumFrom 1
+  where primes = [i + j + (2 * i * j) | i <- [1..n], j <- [i..n]]
