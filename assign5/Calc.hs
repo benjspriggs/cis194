@@ -1,6 +1,7 @@
 module Calc where
 import ExprT
 import Parser (parseExp)
+{-# LANGUAGE TypeSynonymInstances #-} -- for Exercise 5
 
 -- Exercise 1 - Write Version 1 of the Calculator
 -- eval :: ExprT -> Integer
@@ -76,4 +77,7 @@ testInteger = testExp :: Maybe Integer
 testBool    = testExp :: Maybe Bool
 testMM      = testExp :: Maybe MinMax
 testSat     = testExp :: Maybe Mod7
+
 -- Exercise 5 
+-- Implement a stack such that
+-- stackVM exp == Right [IVal exp]
