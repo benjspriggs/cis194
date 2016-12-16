@@ -61,9 +61,19 @@ instance Expr MinMax where
   add l r = max l r
   mul l r = min l r
 
-newtype Mod7 = Mod7 Integer deriving (Eq, Ord, Show)
+newtype Mod7 = Mod7 Integer deriving (Eq, Show)
 
 instance Expr Mod7 where
   lit = Mod7 . mod 7
   add (Mod7 x) (Mod7 y) = Mod7 $ mod 7 (x + y)
   mul (Mod7 x) (Mod7 y) = Mod7 $ mod 7 (x * y)
+
+-- Tests for stuff
+testExp :: Expr a => Maybe a
+testExp = parseExp lit add mul "(3 * -4) + 5"
+
+testInteger = testExp :: Maybe Integer
+testBool    = testExp :: Maybe Bool
+testMM      = testExp :: Maybe MinMax
+testSat     = testExp :: Maybe Mod7
+-- Exercise 5 
