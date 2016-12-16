@@ -1,4 +1,4 @@
-{-# LANGUAGE TypeSynonymInstances #-} -- for Exercise 5
+{-# LANGUAGE TypeSynonymInstances, FlexibleInstances #-} -- for Exercises 5 and 6
 module Calc where
 import ExprT
 import Parser (parseExp)
@@ -7,10 +7,10 @@ import StackVM
 -- Exercise 1 - Write Version 1 of the Calculator
 -- eval :: ExprT -> Integer
 -- e.g.:
--- (ExprT.Mul (ExprT.Add (Lit 2) (Lit 3)) (Lit 4)) == 20
+-- (ExprT.Mul (ExprT.Add (ExprT.Lit 2) (ExprT.Lit 3)) (ExprT.Lit 4)) == 20
 eval :: ExprT -> Integer
 eval e = case e of
-  Lit n -> n
+  ExprT.Lit n -> n
   ExprT.Add l r -> eval l + eval r
   ExprT.Mul l r -> eval l * eval r
 
@@ -18,20 +18,20 @@ eval e = case e of
 -- Using the parser from Parser.hs
 -- evalString :: String -> Maybe Integer
 evalString :: String -> Maybe Integer
-evalString s = case parseExp Lit ExprT.Add ExprT.Mul s of
+evalString s = case parseExp ExprT.Lit ExprT.Add ExprT.Mul s of
   Just e -> Just (eval e)
   Nothing -> Nothing
 
 -- Exercise 3 - Create Expr typeclass
 -- Create a type class such that:
 -- mul (add (lit 2) (lit 3)) (lit 4) :: ExprT
--- == ExprT.Mul (ExprT.Add (Lit 2) (Lit 3)) (Lit 4)
+-- == ExprT.Mul (ExprT.Add (ExprT.Lit 2) (ExprT.Lit 3)) (ExprT.Lit 4)
 class (Show a) => Expr a where
   lit :: Integer -> a
   add, mul :: a -> a -> a
 
 instance Expr ExprT where
-  lit = Lit
+  lit = ExprT.Lit
   add = ExprT.Add
   mul = ExprT.Mul
 
@@ -83,5 +83,10 @@ testSat     = testExp :: Maybe Mod7
 -- Implement a compiler for a Stack VM
 -- It is true for any exp :: Exp a => a:
 -- stackVM exp == Right [IVal exp]
+instance Expr StackVM.Program where
+  lit x = [StackVM.PushI x]
+  add = (. (++ [StackVM.Add])) . (++)
+  mul = (. (++ [StackVM.Mul])) . (++)
+
 compile :: String -> Maybe Program
-compile = undefined
+compile = parseExp lit add mul
