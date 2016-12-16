@@ -68,5 +68,6 @@ map' f = foldr (\x l -> (f x):l) []
 -- implemented with function composition
 sieveSundaram :: Integer -> [Integer]
 sieveSundaram n = 
-  map (+1) . map (*2) .  filter (flip notElem primes) $ [1..n]
+  map (+1) . map (*2) .  filter notInPrimes $ [1..n]
   where primes = [i + j + (2 * i * j) | i <- [1..n], j <- [i..n]]
+        notInPrimes = flip notElem primes
