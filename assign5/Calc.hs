@@ -48,3 +48,22 @@ instance Expr Integer where
   lit = id
   add = (+)
   mul = (*)
+
+instance Expr Bool where
+  lit = (>=0)
+  add = (&&)
+  mul = (||)
+
+newtype MinMax = MinMax Integer deriving (Eq, Ord, Show)
+
+instance Expr MinMax where
+  lit = MinMax
+  add l r = max l r
+  mul l r = min l r
+
+newtype Mod7 = Mod7 Integer deriving (Eq, Ord, Show)
+
+instance Expr Mod7 where
+  lit = Mod7 . mod 7
+  add (Mod7 x) (Mod7 y) = Mod7 $ mod 7 (x + y)
+  mul (Mod7 x) (Mod7 y) = Mod7 $ mod 7 (x * y)
