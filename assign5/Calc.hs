@@ -100,10 +100,17 @@ class HasVars a where
 
 -- Via lookup, strings are mapped to integers
 instance HasVars (M.Map String Integer -> Maybe Integer) where
-  var = undefined
+  var = M.lookup
 
 -- Functions of HasVars can be interpreted as expressions
 instance Expr (M.Map String Integer -> Maybe Integer) where
-  lit = undefined
-  add = undefined
+  lit = const . Just
+  add a b = undefined
   mul = undefined
+
+-- Testing functionality
+withVars :: [(String, Integer)]
+  -> (M.Map String Integer -> Maybe Integer)
+  -> Maybe Integer
+withVars vs exp = exp $ M.fromList vs
+
