@@ -3,6 +3,7 @@ module Calc where
 import ExprT
 import Parser (parseExp)
 import StackVM
+import qualified Data.Map as M
 
 -- Exercise 1 - Write Version 1 of the Calculator
 -- eval :: ExprT -> Integer
@@ -79,10 +80,11 @@ testBool    = testExp :: Maybe Bool
 testMM      = testExp :: Maybe MinMax
 testSat     = testExp :: Maybe Mod7
 
--- Exercise 5 
--- Implement a compiler for a Stack VM
+-- Exercise 5 - Implement a compiler for a Stack VM
 -- It is true for any exp :: Exp a => a:
 -- stackVM exp == Right [IVal exp]
+-- This question was not that clear? Confusing in a
+-- not very helpful way
 instance Expr StackVM.Program where
   lit x = [StackVM.PushI x]
   add = (. (++ [StackVM.Add])) . (++)
@@ -90,3 +92,15 @@ instance Expr StackVM.Program where
 
 compile :: String -> Maybe Program
 compile = parseExp lit add mul
+
+-- Exercise 6 - Create ability for values to be stored
+-- Using a mapping interface, implement some classes
+class HasVars a where
+  var :: String -> a
+
+-- Via lookup, strings are mapped to integers
+instance HasVars (M.Map String Integer -> Maybe Integer) where
+  var = undefined
+
+-- Functions of HasVars can be interpreted as expressions
+instance Expr (M.Map String Integer -> Maybe Integer)
