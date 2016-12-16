@@ -104,3 +104,4 @@ instance HasVars (M.Map String Integer -> Maybe Integer) where
 
 -- Functions of HasVars can be interpreted as expressions
 instance Expr (M.Map String Integer -> Maybe Integer)
+  var = undefined
