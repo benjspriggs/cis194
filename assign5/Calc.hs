@@ -19,3 +19,14 @@ evalString :: String -> Maybe Integer
 evalString s = case parseExp Lit Add Mul s of
   Just e -> Just (eval e)
   Nothing -> Nothing
+
+-- Exercise 3 - Create Expr typeclass
+-- Create a type class such that:
+-- mul (add (lit 2) (lit 3)) (lit 4) :: ExprT
+-- == Mul (Add (Lit 2) (Lit 3)) (Lit 4)
+class Expr a where
+  lit :: a
+  add, mul :: Expr e => e -> e -> a
+
+-- instance Expr Integer where
+  -- lit n = n
