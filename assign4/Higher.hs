@@ -70,7 +70,6 @@ sieveSundaram :: Integer -> [Integer]
 sieveSundaram n = 
   takeWhile (<n) $ 
   map (\x -> (2*x) + 1) $
-  filter (\x -> not $
-  elem x primes) $ 
+  filter (\x -> notElem x primes) $ 
   enumFrom 1
   where primes = [i + j + (2 * i * j) | i <- [1..n], j <- [i..n]]
