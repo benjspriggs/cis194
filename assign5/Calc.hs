@@ -33,4 +33,18 @@ instance Expr ExprT where
   add = Add
   mul = Mul
 
-
+-- Exercise 4 - Extending Functionality
+-- Create instances of Expr for:
+-- Integer
+-- Bool - every literal <= 0 is False, else True
+--   addition ||
+--   multiplication &&
+-- MinMax
+--   addition max
+--   multiplication min
+-- Mod7
+--   all values in the range 0..6, all arithmetic is mod7
+instance Expr Integer where
+  lit = id
+  add = (+)
+  mul = (*)
