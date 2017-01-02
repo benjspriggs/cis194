@@ -84,4 +84,13 @@ nats = streamFromSeed (+1) 0
 -- is the largest power of 2 which evenly divides n
 -- ruler :: Stream Integer
 ruler :: Stream Integer
-ruler = undefined
+ruler =
+  interleaveStreams (streamRepeat 0)
+    (interleaveStreams (streamRepeat 1) 
+      (interleaveStreams (streamRepeat 2)
+        (interleaveStreams (streamRepeat 3)
+          (streamFromSeed (+1) 4))))
+
+interleaveStreams :: Stream a -> Stream a -> Stream a
+interleaveStreams (Cons f fs) (Cons g gs)
+  = (Cons f (Cons g (interleaveStreams fs gs)))
