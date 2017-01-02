@@ -68,3 +68,19 @@ streamMap f (Cons a as) =
 streamFromSeed :: (a -> a) -> a -> Stream a
 streamFromSeed rule seed = 
   Cons seed (streamFromSeed rule (rule seed))
+
+-- Exercise 5
+-- Define the stream which contains 
+-- the infinite list of natural numbers (0, 1, 2, . . .)
+-- nats :: Stream Integer
+nats :: Stream Integer
+nats = streamFromSeed (+1) 0
+
+-- Define a stream which corresponds to 
+-- the ruler function
+-- 0, 1, 0, 2, 0, 1, 0, 3, 0, 1, 0, 2, 0, 1, 0, 4, . . .
+-- where the nth element in the stream 
+-- (assuming the first element corresponds to n = 1)
+-- is the largest power of 2 which evenly divides n
+-- ruler :: Stream Integer
+ruler :: Stream Integer
