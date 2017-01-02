@@ -15,3 +15,9 @@ fib n = (fib (n-1)) + (fib (n-2))
 -- Fibonacci numbers naively
 fibsl :: [Integer]
 fibsl = [ fib n | n <- [0..] ]
+
+-- Exercise 2
+-- Compute the infinite list of all
+-- Fibonacci numbers in linear time
+fibs2 :: [Integer]
+fibs2 = undefined
