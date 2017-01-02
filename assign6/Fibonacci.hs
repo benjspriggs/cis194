@@ -27,3 +27,14 @@ fibs2 = 0 : 1 :
     (genericIndex fibs2 (n-1))
   + (genericIndex fibs2 (n-2))) 
   [2..]
+
+-- Exercise 3
+-- Define a data type of polymorphic
+-- streams, Stream a
+-- Write a function that converts from streams
+-- to infinite lists:
+-- streamToList :: Stream a -> [a]
+data Stream a
+
+streamToList :: Stream a -> [a]
+streamToList = undefined
