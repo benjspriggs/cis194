@@ -105,7 +105,7 @@ instance HasVars (M.Map String Integer -> Maybe Integer) where
 -- Functions of HasVars can be interpreted as expressions
 instance Expr (M.Map String Integer -> Maybe Integer) where
   lit = const . Just
-  add a b = undefined
+  add = undefined -- TODO: Finish the exercise (There's got to be a better way!)
   mul = undefined
 
 -- Testing functionality
@@ -113,4 +113,3 @@ withVars :: [(String, Integer)]
   -> (M.Map String Integer -> Maybe Integer)
   -> Maybe Integer
 withVars vs exp = exp $ M.fromList vs
-
