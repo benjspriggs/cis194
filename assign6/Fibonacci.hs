@@ -84,3 +84,4 @@ nats = streamFromSeed (+1) 0
 -- is the largest power of 2 which evenly divides n
 -- ruler :: Stream Integer
 ruler :: Stream Integer
+ruler = undefined
