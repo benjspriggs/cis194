@@ -66,4 +66,5 @@ streamMap f (Cons a as) =
 -- the rest of the stream.
 -- streamFromSeed :: (a -> a) -> a -> Stream a
 streamFromSeed :: (a -> a) -> a -> Stream a
-streamFromSeed = undefined
+streamFromSeed rule seed = 
+  Cons seed (streamFromSeed rule (rule seed))
