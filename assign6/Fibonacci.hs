@@ -54,7 +54,8 @@ streamRepeat x = Cons x (streamRepeat x)
 -- a function to every element of a Stream.
 -- streamMap :: (a -> b) -> Stream a -> Stream b
 streamMap :: (a -> b) -> Stream a -> Stream b
-streamMap = undefined
+streamMap f (Cons a as) = 
+  (Cons (f a) (streamMap f as))
 
 -- Write a function which generates 
 -- a Stream from a “seed” of type a,
