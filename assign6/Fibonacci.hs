@@ -30,7 +30,7 @@ fibs2 = 0 : 1 :
 
 -- Exercise 3
 -- Define a data type of polymorphic
--- streams, Stream a
+-- streams, Stream a.
 -- Write a function that converts from streams
 -- to infinite lists:
 -- streamToList :: Stream a -> [a]
@@ -41,3 +41,28 @@ instance Show a => Show (Stream a) where
 
 streamToList :: Stream a -> [a]
 streamToList (Cons h t) = h : streamToList t
+
+-- Exercise 4
+-- Write a function which generates a stream 
+-- containing infinitely many copies of the
+-- given element.
+-- streamRepeat :: a -> Stream a
+streamRepeat :: a -> Stream a
+streamRepeat x = Cons x (streamRepeat x)
+
+-- Write a function which applies 
+-- a function to every element of a Stream.
+-- streamMap :: (a -> b) -> Stream a -> Stream b
+streamMap :: (a -> b) -> Stream a -> Stream b
+streamMap = undefined
+
+-- Write a function which generates 
+-- a Stream from a “seed” of type a,
+-- which is the first element of the stream,
+-- and an “unfolding rule” of type a -> a
+-- which specifies how to transform the seed 
+-- into a new seed, to be used for generating 
+-- the rest of the stream.
+-- streamFromSeed :: (a -> a) -> a -> Stream a
+streamFromSeed :: (a -> a) -> a -> Stream a
+streamFromSeed = undefined
