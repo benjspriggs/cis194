@@ -1,6 +1,8 @@
 -- Homework 6 - Lazy Evaluation
 -- Benjamin Spriggs
 
+import Data.List -- for genericTake
+
 -- Exercise 1
 -- Create a function that computes the
 -- nth digit of the Fibonacci sequence
@@ -20,4 +22,8 @@ fibsl = [ fib n | n <- [0..] ]
 -- Compute the infinite list of all
 -- Fibonacci numbers in linear time
 fibs2 :: [Integer]
-fibs2 = undefined
+fibs2 = 0 : 1 : 
+  map (\n -> 
+    (genericIndex fibs2 (n-1))
+  + (genericIndex fibs2 (n-2))) 
+  [2..]
